@@ -1,0 +1,35 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="my-4">Register</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            {{ user_form.username }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            {{ user_form.email }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">First name</label>
+            {{ user_form.first_name }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            {{ user_form.password }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            {{ user_form.password2 }}
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+
+
+{% endblock %}

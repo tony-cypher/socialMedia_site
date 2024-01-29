@@ -1,0 +1,81 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+{% block content %}
+
+<section id="posts">
+    <h2 class="text-center">My Posts</h2>
+    <div class="container">
+        <div class="row">
+            {% for post in posts %}
+            <div class="col">
+                <div class="profile my-3">
+                    <img src="{{ post.user.profile.profile_img.url }}" alt="">
+                    <a href="#">{{ post.user }}</a> . 2h
+                </div>
+                <div class="post">
+                    <img src="{{ post.image.url }}" alt="">
+                </div>
+                <div class="my-3 likes">
+                    <a id="{{ post.id }}" class="btn-like">
+                        {% if logged_user in post.likes.all %}
+                        <i class="bi bi-heart-fill mx-2"></i>
+                        {% else %}
+                        <i class="bi bi-heart mx-2""></i>
+                        {% endif %}
+                    </a>
+                    <span>
+                        {% if post.likes.count < 1 %}
+                        {% elif post.likes.count == 1 %}
+                        {{ post.likes.first }} liked this
+                        {% elif post.likes.count > 1 %}
+                        {{ post.likes.first }} & {{ post.likes.count|sub:1 }} liked this
+                        {% endif %}
+                    </span>
+                    <p class=" d-inline-flex gap-1">
+                            <a data-bs-toggle="collapse" href="#post{{ post.id }}" role="button">
+                                <i class=" bi bi-chat-left"></i>
+                            </a>
+                            </p>
+                            <div class="collapse" id="post{{ post.id }}">
+                                <div class="card card-body">
+                                    {% for comment in post.comment.all %}
+                                    <b>{{ comment.posted_by}}:</b> {{ comment.body }} <br>
+                                    {% endfor %}
+                                </div>
+                                <div class="container mt-4">
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+                                        {{ comment_form.body }}
+                                        <input type="hidden" name="post_id" , id="post_id" value="{{ post.id }}">
+                                        <input type="hidden" name="posted_by" , id="posted_by"
+                                            value="{{ logged_user }}">
+                                        <button class="btn btn-success my-3" type="submit">Add comment</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <p>{{ post.title }}</p>
+                            <p>{{ post.caption }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+</section>
+<script>
+    window.CSRF_TOKEN = "{{ csrf_token }}"
+    $(document).on('click', '.btn-like', function () {
+        var post_id = this.id
+        $.ajax({
+            method: 'POST',
+            url: '/posts/like',
+            data: { post_id: post_id, csrfmiddlewaretoken: window.CSRF_TOKEN }
+        })
+        window.location.href = 'http://127.0.0.1:8000/posts/feed/'
+    })
+</script>
+{% endblock %}

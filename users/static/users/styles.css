@@ -1,0 +1,32 @@
+ section {
+     padding: 60px 0;
+     overflow: hidden;
+ }
+
+
+ #posts .profile img {
+     margin-right: 6px;
+     border-radius: 50%;
+     width: 35px;
+     height: 35px;
+ }
+
+ #posts .profile a {
+     text-decoration: none;
+     color: #000000;
+ }
+
+ #posts .profile a:hover {
+     color: #0000ff;
+ }
+
+
+ #posts .post img {
+     width: 350px;
+     height: 250px;
+ }
+
+ .likes a {
+     text-decoration: none;
+     color: red;
+ }
