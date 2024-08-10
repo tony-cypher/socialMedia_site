@@ -6,7 +6,7 @@ from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditFor
 from .models import Profile
 from posts.models import Post
 
-# Create your views here.
+# Create your views here. 
 
 def user_login(request):
     if request.method == 'POST':
